@@ -1,0 +1,5 @@
+Argument_name,Value_type,Mandatory,Check_existing,Check_read_access,Check_write_access
+parameter1,String,No,,,
+parameter2,File,Yes,Yes,Yes,Yes
+parameter3,Path,Yes,No,Yes,
+parameter4,Flag,Yes,,,
