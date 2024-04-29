@@ -2,7 +2,7 @@ import java.io.*;
 import java.util.HashMap;
 import java.util.Map;
 
-public class CmdArgProcessorGenerator {
+public class DynamicClassGenerator {
 
     private static final String ARGUMENT_LIST_FLAG = "-argument_list=";
     private static final String CLASS_FILE_FLAG = "-class_file=";
@@ -29,7 +29,7 @@ public class CmdArgProcessorGenerator {
         }
 
         if (argumentListPath == null || classFilePath == null || classLanguage == null || argumentValueSeparator == null) {
-            System.err.println("Usage: java -jar CmdArgProcessorGenerator.jar " +
+            System.err.println("Usage: java -jar DynamicClassGenerator.jar " +
                     "-argument_list=<path to csv file> " +
                     "-class_file=<path to generated class> " +
                     "-class_language=<language type> " +
@@ -143,7 +143,8 @@ public class CmdArgProcessorGenerator {
             String argumentName = argumentType.getName();
             String argumentTypeName = argumentType.getType();
             classBuilder.append("                    case \"").append("-"+argumentName).append("\":\n");
-            classBuilder.append("\t\t\t\t\t\tparse").append(capitalize(argumentName)).append("(name,value);\n");
+            classBuilder.append("\t\t\t\t\t\tset").append(capitalize(argumentName)).append("(value);\n");
+            classBuilder.append("\t\t\t\t\t\tparse").append(capitalize(argumentName)).append("(name);\n");
             classBuilder.append("                        break;\n");
         }
 
@@ -164,10 +165,10 @@ public class CmdArgProcessorGenerator {
             ArgumentType argumentType = entry.getValue();
             String argumentTypeName = argumentType.getType();
             classBuilder.append("    // Dummy implementation for parsing ").append(argumentTypeName).append("\n");
-            classBuilder.append("    private ").append("static ").append("void").append(" parse").append(capitalize(entry.getKey())).append("(String name,String value) {\n");
+            classBuilder.append("    private ").append("").append("void").append(" parse").append(capitalize(entry.getKey())).append("(String name) {\n");
 
             classBuilder.append("        // Implement parsing logic for ").append(argumentTypeName).append(" here\n");
-
+            classBuilder.append("       String value = get"+capitalize(entry.getKey())+"();\n");
             if(entry.getValue().isMandatory.equals("Yes")){
                 classBuilder.append("       if(value.equals(\"\") ){\n");
                 classBuilder.append("           System.out.println(\"paramter " + argumentType.name + " is not passed\");\n");

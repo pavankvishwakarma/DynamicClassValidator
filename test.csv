@@ -1,5 +1,5 @@
-Argument_name,Value_type,Mandatory,Check_existing,Check_read_access,Check_write_access
-parameter1,String,No,,,
-parameter2,File,Yes,Yes,Yes,Yes
-parameter3,Path,Yes,No,Yes,
-parameter4,Flag,Yes,,,
+Argument_name,Argument_type,Is_Mandatory,Is_existing,Is_read_access,Is_write_access
+name,String,No,,,
+email,String,Yes,Yes,Yes,Yes
+college,String,Yes,No,Yes,
+addr,String,Yes,,,
